@@ -1,9 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { BrowserRouter } from 'react-router-dom'
 import App from './App.jsx'
 import './index.css'
-import { ChakraProvider, extendTheme, ColorModeScript } from '@chakra-ui/react'
-import { mode } from '@chakra-ui/theme-tools' // Import mode function for conditional theming
+import { ChakraProvider } from '@chakra-ui/react'
+import { extendTheme, ColorModeScript } from '@chakra-ui/react'
+import { mode } from '@chakra-ui/theme-tools'
 
 const styles = {
   global: (props) => ({
@@ -16,7 +18,7 @@ const styles = {
 
 const config = {
   initialColorMode: 'dark',
-  useSystemColorMode: true, // CHANGES COLOR MODE BASED ON OPERATING SYSTEM
+  useSystemColorMode: true,
 };
 
 const colors = {
@@ -32,7 +34,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </ChakraProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
 );
