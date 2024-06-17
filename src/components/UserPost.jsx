@@ -1,14 +1,16 @@
 import { VStack, Flex, Box, Avatar, Text, Image } from '@chakra-ui/react'
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { CgMoreO } from "react-icons/cg";
-import { FaRegHeart } from "react-icons/fa";
-import { FaRegCommentAlt } from "react-icons/fa";
-import { AiOutlineRetweet } from "react-icons/ai";
-import { FiSend } from "react-icons/fi";
+import { Actions } from './Actions';
 
 export const UserPost = () => {
+
+    const [liked, setLiked] = useState(false);
   return (
+
+    
+
     <Link to={"/cristiano/post/1"}>
 
         <VStack spacing={4} p={4} borderWidth={1} borderRadius="lg" boxShadow="sm">
@@ -25,7 +27,7 @@ export const UserPost = () => {
 
                     <Box>
                         <Text fontSize='xl' as='b'>cristiano</Text>
-                        <Text fontSize={'2xl'}>Ich bin der GOAT</Text>
+                        <Text fontSize={'2xl'}>Let's go Portugal⚽</Text>
                     </Box>
                     
                 </Flex>
@@ -45,25 +47,13 @@ export const UserPost = () => {
             <Image src="/post1.png"></Image>
         </Box>
 
-        <Flex gap={4} alignItems={"center"} justifyContent="flex-start">
-          <FaRegHeart size="30px" />
-          <FaRegCommentAlt size="30px" />
-          <AiOutlineRetweet size="30px" />
-          <FiSend size="30px" />
-        </Flex>
+        <Actions liked={liked} setLiked={setLiked} />
 
         <Flex gap={2} alignItems={"center"} justifyContent="flex-start">
             <Text color={"gray.light"}> 100k likes</Text>
           <Text color={"gray.light"}> 5k replies</Text>
 
         </Flex>
-
-
-
-
-
-
-
 
 
 
