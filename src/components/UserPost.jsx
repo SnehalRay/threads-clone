@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { CgMoreO } from "react-icons/cg";
 import { Actions } from './Actions';
 
-export const UserPost = () => {
+export const UserPost = ({likes , replies , post , caption}) => {
 
     const [liked, setLiked] = useState(false);
   return (
@@ -27,7 +27,7 @@ export const UserPost = () => {
 
                     <Box>
                         <Text fontSize='xl' as='b'>cristiano</Text>
-                        <Text fontSize={'2xl'}>Let's go Portugal⚽</Text>
+                        <Text fontSize={'2xl'}>{caption}</Text>
                     </Box>
                     
                 </Flex>
@@ -44,14 +44,14 @@ export const UserPost = () => {
         </Flex>
 
         <Box>
-            <Image src="/post1.png"></Image>
+            <Image src={post}></Image>
         </Box>
 
         <Actions liked={liked} setLiked={setLiked} />
 
         <Flex gap={2} alignItems={"center"} justifyContent="flex-start">
-            <Text color={"gray.light"}> 100k likes</Text>
-          <Text color={"gray.light"}> 5k replies</Text>
+            <Text color={"gray.light"}> {likes} likes</Text>
+          <Text color={"gray.light"}> {replies} replies</Text>
 
         </Flex>
 
