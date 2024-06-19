@@ -12,7 +12,7 @@ export const signupUser = async (req, res) => {
     const existingUser = await User.findOne({ $or: [{ email }, { username }] });
 
     if (existingUser) {
-      return res.status(400).json({ error: 'User already exists' });
+      return res.status(401).json({ error: 'User already exists' });
     }
 
     // Hash the password
