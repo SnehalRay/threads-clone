@@ -19,7 +19,7 @@ router.post("/signout", signingOut);
 router.post("/followunfollow/:id",authenticateToken, followUnfollow);
 
 //EDITING PROFILE
-router.post("/editProfile/:id",authenticateToken, editingUser);
+router.post("/editProfile/",authenticateToken, editingUser);
 
 
 export default router;
