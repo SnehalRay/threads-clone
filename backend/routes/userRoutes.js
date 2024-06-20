@@ -4,7 +4,7 @@ import authenticateToken from '../middleware/authenticateToken.js';
 import { followUnfollow } from '../controller/FollowUnFollowUser.js';
 import { editingUser } from '../controller/EditUser.js';
 import  {getUser} from '../controller/GetUser.js';
-// import GetUser from '../controller/GetUser.js';
+
 
 const router = express.Router();
 
