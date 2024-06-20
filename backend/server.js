@@ -3,6 +3,7 @@ import dotenv from "dotenv"
 import connectDB from "./databse/connectdb.js";
 import userRoutes from "./routes/userRoutes.js"
 import cookieParser from 'cookie-parser';
+import postRouter from "./routes/postRoutes.js";
 
 
 dotenv.config();
@@ -24,6 +25,8 @@ app.get("/",(req,res)=>{
 })
 
 app.use("/api/users",userRoutes);
+
+app.use("/api/posts",postRouter);
 
 
 app.listen(PORT,()=>{console.log(`Server started with port ${PORT}...`)})
