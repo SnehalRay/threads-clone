@@ -15,6 +15,11 @@ const postSchema = mongoose.Schema({
         default: null
 
     },
+    likesPeople:{
+        type:[String],
+        default:[]
+    }
+    ,
     likes:{
         type: Number,
         default: 0
