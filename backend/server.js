@@ -26,7 +26,13 @@ app.get("/",(req,res)=>{
 
 app.use("/api/users",userRoutes);
 
-app.use("/api/posts",postRouter);
+app.use("/api/posts", postRouter);
+
+console.log("postRouter setup on /api/posts"); // Debugging statement
+
+app.get("/lol",async(req,res)=>{
+    res.send("LOL")
+});
 
 
 app.listen(PORT,()=>{console.log(`Server started with port ${PORT}...`)})
