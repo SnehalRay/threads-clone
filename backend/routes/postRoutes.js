@@ -4,6 +4,7 @@ import { createPost } from '../controller/CreatePost.js';
 import { getPost } from '../controller/GetPost.js';
 import { deletePost } from '../controller/DeletePost.js';
 import { likePost } from '../controller/LikePost.js';
+import { replyPost } from '../controller/ReplyPost.js';
 
 const postRouter = express.Router();
 
@@ -23,5 +24,8 @@ postRouter.delete("/delete/:id",authenticateToken,deletePost)
 // LIKING A POST
 
 postRouter.post("/like/:id",authenticateToken,likePost)
+
+//REPLYING TO A POST
+postRouter.post("/reply/:id",authenticateToken,replyPost)
 
 export default postRouter;
