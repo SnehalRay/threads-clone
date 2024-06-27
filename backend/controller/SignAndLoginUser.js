@@ -40,20 +40,20 @@ export const loggingUser = async (req, res) => {
     const existingUser = await User.findOne({ username });
 
     if (!existingUser) {
-      return res.status(401).json({ message: "User does not exist" });
+      return res.status(401).json({ error: "User does not exist" });
     }
 
     // Verify password
     const isMatch = await bcrypt.compare(password, existingUser.password);
     if (!isMatch) {
-      return res.status(401).json({ message: "Password incorrect" });
+      return res.status(401).json({ error: "Password incorrect" });
     }
 
     // Generate token
     generateToken({ id: existingUser._id, username: existingUser.username, email: existingUser.email }, res);
     return res.status(200).json({ message: 'User successfully logged in', user: existingUser });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
