@@ -68,6 +68,9 @@ export default function SignupCard() {
         })
       }
 
+      localStorage.setItem("user",JSON.stringify(data));
+      
+
     } catch (err) {
       console.log(err)
     }

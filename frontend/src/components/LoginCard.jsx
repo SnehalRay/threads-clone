@@ -67,6 +67,9 @@ import { useState } from 'react';
             isClosable: true,
           });
         }
+
+        localStorage.setItem("user",JSON.stringify(data));
+
     
       } catch (error) {
         console.log(error)
