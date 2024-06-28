@@ -89,6 +89,12 @@ export default function SignupCard() {
     }
   }
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleSignUp(); // Call handleLogin function when Enter key is pressed
+    }
+  }
+
   return (
     <Flex
       minH={'80vh'}
@@ -110,24 +116,24 @@ export default function SignupCard() {
               <Box>
                 <FormControl id="name" isRequired>
                   <FormLabel isRequired>Name</FormLabel>
-                  <Input type="text" onChange={(e) => setInputs({ ...inputs, name: e.target.value })} value={inputs.name} />
+                  <Input type="text" onChange={(e) => setInputs({ ...inputs, name: e.target.value })} value={inputs.name} onKeyDown={handleKeyDown} />
                 </FormControl>
               </Box>
               <Box>
                 <FormControl id="username" isRequired>
                   <FormLabel isRequired>Username</FormLabel>
-                  <Input type="text" onChange={(e) => setInputs({ ...inputs, username: e.target.value })} value={inputs.username} />
+                  <Input type="text" onChange={(e) => setInputs({ ...inputs, username: e.target.value })} value={inputs.username} onKeyDown={handleKeyDown}/>
                 </FormControl>
               </Box>
             </HStack>
             <FormControl id="email" isRequired>
               <FormLabel>Email address</FormLabel>
-              <Input type="email" onChange={(e) => setInputs({ ...inputs, email: e.target.value })} value={inputs.email} />
+              <Input type="email" onChange={(e) => setInputs({ ...inputs, email: e.target.value })} value={inputs.email} onKeyDown={handleKeyDown} />
             </FormControl>
             <FormControl id="password" isRequired>
               <FormLabel>Password</FormLabel>
               <InputGroup>
-                <Input type={showPassword ? 'text' : 'password'} onChange={(e) => setInputs({ ...inputs, password: e.target.value })} value={inputs.password} />
+                <Input type={showPassword ? 'text' : 'password'} onChange={(e) => setInputs({ ...inputs, password: e.target.value })} value={inputs.password} onKeyDown={handleKeyDown} />
                 <InputRightElement h={'full'}>
                   <Button
                     variant={'ghost'}
