@@ -26,10 +26,7 @@ export const signupUser = async (req, res) => {
     if (newUser) {
       generateToken({ id: newUser._id, username: newUser.username, email: newUser.email }, res);
       return res.status(201).json({ 
-        _id: newUser._id,
-        email:newUser.email,
-        username: newUser.username,
-        name: newUser.name,
+        user:newUser
       });
     }
   } catch (error) {
@@ -57,10 +54,7 @@ export const loggingUser = async (req, res) => {
     // Generate token
     generateToken({ id: existingUser._id, username: existingUser.username, email: existingUser.email }, res);
     return res.status(201).json({ 
-      _id: existingUser._id,
-      email:existingUser.email,
-      username: existingUser.username,
-      name: existingUser.name,
+      user: existingUser
     });
   } catch (error) {
     res.status(500).json({ error: error.message });

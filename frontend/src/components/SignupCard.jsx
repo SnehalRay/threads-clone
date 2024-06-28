@@ -78,7 +78,7 @@ export default function SignupCard() {
           duration: 9000,
           isClosable: true,
         })
-      localStorage.setItem("user",JSON.stringify(data));
+      localStorage.setItem("user",JSON.stringify(data.user));
       setUser(JSON.parse(localStorage.getItem('user')));
       }
 

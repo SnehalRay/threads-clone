@@ -57,9 +57,13 @@ export default function LoginCard() {
           isClosable: true,
         });
 
-        setUser(data); // Update state with user data
+        // setUser(data); // Update state with user data
+        // setUser(data.user); // Update state with user data
+        localStorage.setItem("user", JSON.stringify(data.user)); // Save user data to localStorage
+        setUser(data.user); // Update state with user data
 
-        localStorage.setItem("user", JSON.stringify(data)); // Save user data to localStorage
+        
+
 
       } else {
         toast({
