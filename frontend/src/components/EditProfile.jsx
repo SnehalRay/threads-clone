@@ -21,11 +21,13 @@ import { useRef, useState } from 'react'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import userAtom from '../../atoms/userAtom'
 import Compressor from 'compressorjs';
+import { useNavigate } from 'react-router-dom';
 
 export default function EditProfile() {
   const setUser = useSetRecoilState(userAtom);
   const user = useRecoilValue(userAtom);
   const toast = useToast();
+  const navigate = useNavigate();
 
   console.log("STARTING")
   console.log(user.profilePic)
@@ -116,6 +118,10 @@ export default function EditProfile() {
 
         localStorage.setItem("user", JSON.stringify(data.user)); // Save user data to localStorage
         setUser(data.user); // Update state with user data
+
+        navigate(-1);
+
+        
       } else {
         toast({
           title: "An error occurred.",
@@ -241,7 +247,8 @@ export default function EditProfile() {
             size="lg"
             _hover={{
               bg: 'red.500',
-            }}>
+            }}
+        onClick={()=>{navigate(-1);}}>
             Cancel
           </Button>
           <Button

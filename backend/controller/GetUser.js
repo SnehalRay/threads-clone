@@ -8,7 +8,7 @@ import { json } from 'express';
 export const getUser = async (req,res) => {
     try{
         const { username } = req.params;
-        const user = await User.findOne({username}).select("-password").select("-updatedAt").select("-_id");
+        const user = await User.findOne({username}).select("-password").select("-updatedAt");
         if (!user){
             return res.status(401).json({message:"Account does not exist"});
         }

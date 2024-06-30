@@ -41,5 +41,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       </BrowserRouter>
     </ChakraProvider>
     </RecoilRoot>
-  </React.StrictMode>
+   </React.StrictMode>
 );

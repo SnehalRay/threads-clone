@@ -50,7 +50,7 @@ export const followUnfollow = async (req, res) => {
     await myUser.save();
     await userToFollow.save();
 
-    res.status(200).json({ message: `Successfully ${isFollowing ? 'unfollowed' : 'followed'} the user`, myUser, userToFollow });
+    res.status(200).json({ message: `Successfully ${isFollowing ? 'unfollowed' : 'followed'} the user`, myUser, userToFollow, followStatus : isFollowing?false:true });
 
   } catch (error) {
     res.status(500).json({ message: error.message });
