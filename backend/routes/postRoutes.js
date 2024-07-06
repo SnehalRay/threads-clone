@@ -6,6 +6,7 @@ import { deletePost } from '../controller/DeletePost.js';
 import { likePost } from '../controller/LikePost.js';
 import { replyPost } from '../controller/ReplyPost.js';
 import { getFeed } from '../controller/GetFeed.js'; 
+import { getUserPosts } from '../controller/GetUserPosts.js';
 
 
 const postRouter = express.Router();
@@ -15,6 +16,10 @@ postRouter.post("/create", authenticateToken, createPost);
 
 // GETTING FEED
 postRouter.get("/feeds",authenticateToken, getFeed); // Define the feed route
+
+//GETTING POSTS OF A USER
+postRouter.get("/user/:id", getUserPosts);
+
 
 // GETTING A POST
 postRouter.get("/:id", getPost);

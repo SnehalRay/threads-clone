@@ -1,10 +1,10 @@
-import { VStack, Flex, Box, Avatar, Text, Image } from '@chakra-ui/react'
+import { VStack, Flex, Box, Avatar, Text, Image, useColorModeValue } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { CgMoreO } from "react-icons/cg";
 import { Actions } from './Actions';
 
-export const UserPost = ({likes , replies , post , caption}) => {
+export const UserPost = ({user, likes , replies , post , caption, time}) => {
 
     const [liked, setLiked] = useState(false);
   return (
@@ -13,20 +13,20 @@ export const UserPost = ({likes , replies , post , caption}) => {
 
     <Link to={"/cristiano/post/1"}>
 
-        <VStack spacing={4} p={4} borderWidth={1} borderRadius="lg" boxShadow="sm">
+        <VStack spacing={4} p={4} borderWidth={1} borderRadius="lg" boxShadow="sm" color={useColorModeValue("black", "white")} >
 
         <Flex justifyContent={"space-between"} w={"full"}>
             <Box>
                 <Flex gap={2} alignItems={"center"}>
                     <Avatar
-                    name='cristiano'
-                    src='/130018.png'
+                    name={user.name}
+                    src={user.profilePic}
                     size={'lg'}>
                         
                     </Avatar>
 
                     <Box>
-                        <Text fontSize='xl' as='b'>cristiano</Text>
+                        <Text fontSize='xl' as='b'>{user.name}</Text>
                         <Text fontSize={'2xl'}>{caption}</Text>
                     </Box>
                     
@@ -35,7 +35,7 @@ export const UserPost = ({likes , replies , post , caption}) => {
 
             <Box>
                 <Flex direction={"column"} gap={2} alignItems={"center"}>
-                    <Text align={'center'} fontSize={'xl'}> 1d </Text>
+                    <Text align={'center'} fontSize={'xl'}> {time} </Text>
                     <CgMoreO size="20px"/>
                 </Flex>
 
