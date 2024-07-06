@@ -1,6 +1,6 @@
-import { Button, Flex, VStack, Text, useToast } from '@chakra-ui/react'
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Button, Flex, VStack, Text, useToast } from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { UserPost } from '../components/UserPost';
 
 export const HomePage = () => {
@@ -82,15 +82,17 @@ export const HomePage = () => {
             mb={4}
             direction="column"
           >
-            <UserPost
-              key={post._id}
-              likes={post.likes}
-              replies={post.replies}
-              post={post.img}
-              caption={post.text}
-              time={timeDifference(post.createdAt)}
-              user={post.user}
-            />
+            <Link to={`/${post.user.username}/post/${post._id}`}>
+              <UserPost
+                likes={post.likes}
+                replies={post.replies}
+                post={post.img}
+                caption={post.text}
+                time={timeDifference(post.createdAt)}
+                user={post.user}
+                id={post._id}
+              />
+            </Link>
           </Flex>
         ))
       ) : (

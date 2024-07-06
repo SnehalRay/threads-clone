@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { UserHeader } from '../components/UserHeader';
 import { UserPost } from '../components/UserPost';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useToast, Spinner, Center, Box, Text } from '@chakra-ui/react';
 
 export const UserPage = () => {
@@ -120,15 +120,17 @@ export const UserPage = () => {
           ) : (
             posts.length > 0 ? (
               posts.map((post) => (
-                <UserPost 
-                  key={post._id}
-                  user={user} 
-                  likes={post.likes} 
-                  replies={post.replies} 
-                  post={post.img} 
-                  caption={post.text} 
-                  time={timeDifference(post.createdAt)}
-                />
+                <Link key={post._id} to={`/${user.username}/post/${post._id}`}>
+                  <UserPost 
+                    user={user} 
+                    likes={post.likes} 
+                    replies={post.replies} 
+                    post={post.img} 
+                    caption={post.text} 
+                    time={timeDifference(post.createdAt)}
+                    id={post._id}
+                  />
+                </Link>
               ))
             ) : (
               <Box textAlign="center" mt={4}>

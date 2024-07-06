@@ -1,4 +1,4 @@
-import { Avatar, Container, Flex } from '@chakra-ui/react';
+import { Avatar, Container, Flex, IconButton } from '@chakra-ui/react';
 import { Navigate, Route, Routes, Link } from 'react-router-dom';
 import { UserPage } from './pages/UserPage';
 import { PostPage } from './pages/PostPage';
@@ -10,6 +10,7 @@ import userAtom from '../atoms/userAtom';
 import { LogoutButton } from './components/LogoutButton';
 import { EditProfilePage } from './pages/EditProfilePage';
 import { CreatePost } from './components/CreatePost';
+import { FaHome } from "react-icons/fa";
 
 function App() {
   const user = useRecoilValue(userAtom);
@@ -32,7 +33,16 @@ function App() {
           alignItems="center"
         >
           <Link to={`/${user.username}`}>
-            <Avatar name={user.name} src={user.profilePic} size={["sm", "md"]} mr={[3, 6]} cursor="pointer" bg="purple.500" color="white"/>
+            <Avatar name={user.name} src={user.profilePic} size={["sm", "md"]} mr={[3, 6]} cursor="pointer" bg="purple.500" color="white" />
+          </Link>
+          <Link to="/">
+            <IconButton
+              icon={<FaHome style={{ fontSize: '1.5em' }} />}
+              size={["sm", "md"]}
+              variant="ghost"
+              aria-label="Home"
+              mr={[3, 6]}
+            />
           </Link>
           <LogoutButton size={["sm", "lg"]} />
         </Flex>

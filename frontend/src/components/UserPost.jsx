@@ -1,23 +1,26 @@
-import { VStack, Flex, Box, Avatar, Text, Image, useColorModeValue } from '@chakra-ui/react'
+import { VStack, Flex, Box, Avatar, Text, Image, useColorModeValue, Menu, MenuButton, MenuList, Button, MenuItem } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { CgMoreO } from "react-icons/cg";
 import { Actions } from './Actions';
 
-export const UserPost = ({user, likes , replies , post , caption, time}) => {
+export const UserPost = ({user, likes , replies , post , caption, time, id}) => {
 
     const [liked, setLiked] = useState(false);
+
+
+
   return (
 
     
 
-    <Link to={"/cristiano/post/1"}>
 
         <VStack spacing={4} p={4} borderWidth={1} borderRadius="lg" boxShadow="sm" color={useColorModeValue("black", "white")} >
 
         <Flex justifyContent={"space-between"} w={"full"}>
             <Box>
                 <Flex gap={2} alignItems={"center"}>
+                    <Link to={`/${user.username}`}>
                     <Avatar
                     name={user.name}
                     src={user.profilePic}
@@ -25,6 +28,7 @@ export const UserPost = ({user, likes , replies , post , caption, time}) => {
                     bg="purple.500" color="white">
                         
                     </Avatar>
+                    </Link>
 
                     <Box>
                         <Text fontSize='xl' as='b'>{user.name}</Text>
@@ -37,7 +41,14 @@ export const UserPost = ({user, likes , replies , post , caption, time}) => {
             <Box>
                 <Flex direction={"column"} gap={2} alignItems={"center"}>
                     <Text align={'center'} fontSize={'xl'}> {time} </Text>
-                    <CgMoreO size="20px"/>
+                    <Menu>
+                        <MenuButton as={Button} variant="ghost">
+                            <CgMoreO size="20px" />
+                        </MenuButton>
+                        <MenuList>
+                            <MenuItem>Delete Post</MenuItem>
+                         </MenuList>
+                    </Menu>
                 </Flex>
 
             </Box>
@@ -60,7 +71,6 @@ export const UserPost = ({user, likes , replies , post , caption, time}) => {
 
         </VStack>
 
-    
-    </Link>
+
   )
 }
