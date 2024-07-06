@@ -4,14 +4,25 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import User from '../models/userModel.js';
 import Post from "../models/postModel.js"
+import cloudinary from 'cloudinary';
 
 dotenv.config();
 
 export const createPost = async (req,res) => {
     try{
 
-        const { text, img} = req.body;
-        const userId = req.user.id
+        let { text, img} = req.body;
+        const userId = req.user.id;
+
+        if (img && img.startsWith('data:image/') ){
+            const uploadedResponse = await cloudinary.uploader.upload(img, {
+                upload_preset: 'ml_default', // Add your upload preset here
+              });
+            img = uploadedResponse.secure_url;
+            console.log("Retreived the uploaded response url")
+        }
+
+
 
         //CREATE A NEW POST
         const newPost = new Post({
