@@ -23,7 +23,12 @@ export const editingUser = async (req, res) => {
       user.password = hashPassword || user.password;
     }
 
-    if (profilePic && profilePic.startsWith('data:image/')) {
+    if (profilePic === null) {
+      if (user.profilePic) {
+        await cloudinary.uploader.destroy(user.profilePic.split("/").pop().split(".")[0]);
+      }
+      user.profilePic = "";
+    } else if (profilePic && profilePic.startsWith('data:image/')) {
       if (user.profilePic) {
         await cloudinary.uploader.destroy(user.profilePic.split("/").pop().split(".")[0]);
       }
@@ -31,13 +36,13 @@ export const editingUser = async (req, res) => {
         upload_preset: 'ml_default', // Add your upload preset here
       });
       profilePic = uploadedResponse.secure_url;
+      user.profilePic = profilePic;
     }
 
     user.name = name || user.name;
     user.username = username || user.username;
     user.email = email || user.email;
     user.bio = bio || user.bio;
-    user.profilePic = profilePic || user.profilePic;
 
     user = await user.save();
     return res.status(201).json({ message: 'User successfully edited', user: user });

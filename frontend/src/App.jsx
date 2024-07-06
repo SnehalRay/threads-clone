@@ -32,7 +32,7 @@ function App() {
           alignItems="center"
         >
           <Link to={`/${user.username}`}>
-            <Avatar name={user.name} src={user.profilePic} size={["sm", "md"]} mr={[3, 6]} cursor="pointer" />
+            <Avatar name={user.name} src={user.profilePic} size={["sm", "md"]} mr={[3, 6]} cursor="pointer" bg="purple.500" color="white"/>
           </Link>
           <LogoutButton size={["sm", "lg"]} />
         </Flex>

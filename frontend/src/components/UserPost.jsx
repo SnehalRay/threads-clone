@@ -21,7 +21,8 @@ export const UserPost = ({user, likes , replies , post , caption, time}) => {
                     <Avatar
                     name={user.name}
                     src={user.profilePic}
-                    size={'lg'}>
+                    size={'lg'}
+                    bg="purple.500" color="white">
                         
                     </Avatar>
 

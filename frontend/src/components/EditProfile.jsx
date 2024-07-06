@@ -29,11 +29,6 @@ export default function EditProfile() {
   const toast = useToast();
   const navigate = useNavigate();
 
-  console.log("STARTING")
-  console.log(user.profilePic)
-  console.log(user.email)
-
-
   const [inputs, setInputs] = useState({
     email: user.email,
     name: user.name,
@@ -41,7 +36,7 @@ export default function EditProfile() {
     bio: user.bio,
     password: "",
     profilePic: user.profilePic
-  })
+  });
 
   //HANDLE UPLOADING PICTURE
   const fileRef = useRef(null);
@@ -55,7 +50,6 @@ export default function EditProfile() {
           const reader = new FileReader();
           reader.onloadend = () => {
             setInputs({ ...inputs, profilePic: reader.result });
-            console.log(reader.result)
           };
           reader.readAsDataURL(result);
         },
@@ -79,7 +73,7 @@ export default function EditProfile() {
         isClosable: true,
       });
     }
-  }
+  };
 
   //HANDLING SUBMITTING IT
   const handleEdit = async () => {
@@ -87,7 +81,7 @@ export default function EditProfile() {
       const response = await fetch("/api/users/editProfile", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"  // Fix Content-Type
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
           email: inputs.email,
@@ -95,17 +89,11 @@ export default function EditProfile() {
           username: inputs.username,
           bio: inputs.bio,
           password: inputs.password,
-          profilePic: inputs.profilePic
-        
+          profilePic: inputs.profilePic || null  // Send null if profilePic is an empty string
         })
-      }
-    
-    );
-    console.log("LES GOO")
-    console.log(inputs.profilePic)
-      
+      });
+
       const data = await response.json();
-      // console.log("Response data:", data);
 
       if (response.ok) {
         toast({
@@ -121,7 +109,6 @@ export default function EditProfile() {
 
         navigate(-1);
 
-        
       } else {
         toast({
           title: "An error occurred.",
@@ -141,7 +128,7 @@ export default function EditProfile() {
         isClosable: true,
       });
     }
-  }
+  };
 
   return (
     <Flex
@@ -152,12 +139,12 @@ export default function EditProfile() {
       <Stack
         spacing={4}
         w={'full'}
-        maxW={{ base: 'sm', md: 'lg' }}  // Adjust max width for mobile
+        maxW={{ base: 'sm', md: 'lg' }}
         bg={useColorModeValue('white', 'gray.dark')}
         rounded={'xl'}
         boxShadow={'lg'}
-        p={{ base: 4, md: 6 }}  // Adjust padding for mobile
-        my={{ base: 8, md: 12 }}>  // Adjust margin for mobile
+        p={{ base: 4, md: 6 }}
+        my={{ base: 8, md: 12 }}>
         <Heading lineHeight={1.1} fontSize={{ base: '2xl', sm: '3xl', md: '4xl' }}>
           User Profile Edit
         </Heading>
@@ -180,7 +167,7 @@ export default function EditProfile() {
             </Center>
             <Center w="full">
               <Button w="full" size="lg" onClick={() => fileRef.current.click()}>Change Profile Picture</Button>
-              <Input type='file' hidden ref={fileRef} onChange={handleImageChange}></Input>
+              <Input type='file' hidden ref={fileRef} onChange={handleImageChange} />
             </Center>
           </Stack>
         </FormControl>
@@ -248,7 +235,7 @@ export default function EditProfile() {
             _hover={{
               bg: 'red.500',
             }}
-        onClick={()=>{navigate(-1);}}>
+            onClick={() => { navigate(-1); }}>
             Cancel
           </Button>
           <Button

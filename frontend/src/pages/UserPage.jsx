@@ -45,7 +45,6 @@ export const UserPage = () => {
         const data = await res.json();
         if (res.ok) {
           setUser(data);
-          console.log(data); // Log the fetched data
         } else {
           console.log(data.message);
           toast({
