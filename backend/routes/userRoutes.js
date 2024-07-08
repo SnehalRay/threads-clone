@@ -5,6 +5,7 @@ import { followUnfollow } from '../controller/FollowUnFollowUser.js';
 import { editingUser } from '../controller/EditUser.js';
 import  {getUser} from '../controller/GetUser.js';
 import { getUserFromID } from '../controller/GetUserFromID.js';
+import { searchUser } from '../controller/SearchUser.js';
 
 
 const router = express.Router();
@@ -29,6 +30,9 @@ router.get("/:username",getUser);
 
 //Getting user object from ID
 router.get("/getUserFromID/:id",getUserFromID)
+
+//GETTING USERS BASED ON THE SEARCH
+router.get("/search/:givenusername",searchUser)
 
 
 export default router;
