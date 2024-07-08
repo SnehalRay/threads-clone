@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { UserHeader } from '../components/UserHeader';
 import { UserPost } from '../components/UserPost';
 import { useParams, Link } from 'react-router-dom';
-import { useToast, Spinner, Center, Box, Text } from '@chakra-ui/react';
+import { useToast, Spinner, Center, Box, Text, VStack, Flex } from '@chakra-ui/react';
 
 export const UserPage = () => {
   const [user, setUser] = useState(null);
@@ -68,7 +68,7 @@ export const UserPage = () => {
     };
 
     getUser();
-  }, [username]);
+  }, [username, toast]);
 
   useEffect(() => {
     const getUserPost = async () => {
@@ -106,7 +106,11 @@ export const UserPage = () => {
     };
 
     getUserPost();
-  }, [user]);
+  }, [user, toast]);
+
+  const handleDeletePost = (postId) => {
+    setPosts((prevPosts) => prevPosts.filter(post => post._id !== postId));
+  };
 
   return (
     <>
@@ -119,19 +123,35 @@ export const UserPage = () => {
             </Center>
           ) : (
             posts.length > 0 ? (
-              posts.map((post) => (
-                <Link key={post._id} to={`/${user.username}/post/${post._id}`}>
-                  <UserPost 
-                    user={user} 
-                    likes={post.likes} 
-                    replies={post.replies} 
-                    post={post.img} 
-                    caption={post.text} 
-                    time={timeDifference(post.createdAt)}
-                    id={post._id}
-                  />
-                </Link>
-              ))
+              <VStack>
+                {posts.map((post) => (
+                  <Link key={post._id} to={`/${user.username}/post/${post._id}`} style={{ width: '100%' }}>
+                    <Flex
+                      p={4}
+                      borderWidth={1}
+                      borderRadius="lg"
+                      boxShadow="sm"
+                      w="100%"
+                      mb={4}
+                      direction="column"
+                      minH="150px"  // Set a minimum height for all posts
+                      maxW="600px"  // Set a maximum width for all posts
+                      alignSelf="center"
+                    >
+                      <UserPost 
+                        user={user} 
+                        likes={post.likes} 
+                        replies={post.replies} 
+                        post={post.img} 
+                        caption={post.text} 
+                        time={timeDifference(post.createdAt)}
+                        postid={post._id}
+                        onDelete={handleDeletePost}
+                      />
+                    </Flex>
+                  </Link>
+                ))}
+              </VStack>
             ) : (
               <Box textAlign="center" mt={4}>
                 <Text fontSize="xl">The user is yet to make a post</Text>
@@ -143,5 +163,5 @@ export const UserPage = () => {
         <p>Loading...</p>
       )}
     </>
-  )
+  );
 }
