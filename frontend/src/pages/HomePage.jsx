@@ -1,7 +1,7 @@
 import { Button, Flex, VStack, Text, useToast } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { UserPost } from '../components/UserPost';
+import { Link } from 'react-router-dom';
 
 export const HomePage = () => {
   const [posts, setPosts] = useState([]);
@@ -66,23 +66,29 @@ export const HomePage = () => {
     getUserFeed();
   }, [toast]);
 
+  const handleDeletePost = (postId) => {
+    setPosts((prevPosts) => prevPosts.filter(post => post._id !== postId));
+  };
+
   return (
     <VStack>
       {loading ? (
         <Text>Loading...</Text>
       ) : posts.length > 0 ? (
         posts.map(post => (
-          <Flex
-            key={post._id}
-            p={4}
-            borderWidth={1}
-            borderRadius="lg"
-            boxShadow="sm"
-            w="100%"
-            mb={4}
-            direction="column"
-          >
-            <Link to={`/${post.user.username}/post/${post._id}`}>
+          <Link to={`${post.user.username}/post/${post._id}`} key={post._id} style={{ width: '100%' }}>
+            <Flex
+              p={4}
+              borderWidth={1}
+              borderRadius="lg"
+              boxShadow="sm"
+              w="100%"
+              mb={4}
+              direction="column"
+              minH="150px"  // Set a minimum height for all posts
+              maxW="600px"  // Set a maximum width for all posts
+              alignSelf="center"
+            >
               <UserPost
                 likes={post.likes}
                 replies={post.replies}
@@ -90,10 +96,11 @@ export const HomePage = () => {
                 caption={post.text}
                 time={timeDifference(post.createdAt)}
                 user={post.user}
-                id={post._id}
+                postid={post._id}
+                onDelete={handleDeletePost}
               />
-            </Link>
-          </Flex>
+            </Flex>
+          </Link>
         ))
       ) : (
         <Text>No posts to show.</Text>

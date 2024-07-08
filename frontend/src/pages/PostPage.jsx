@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { UserPost } from '../components/UserPost';
 import { Comment } from '../components/Comment';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 export const PostPage = () => {
   const { username, pid } = useParams();
   const [user, setUser] = useState(null);
   const [post, setPost] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,17 +31,22 @@ export const PostPage = () => {
     console.log(user);
   }, [user]);
 
+  const onDelete = () => {
+    navigate(-1);
+  }
+
   return (
     <>
       {post && user ? (
         <UserPost 
-          key={post._id}
+          postid={post._id}
           likes={post.likes}
           replies={post.replies}
           post={post.img}
           caption={post.text}
           time={timeDifference(post.createdAt)}
           user={user}
+          onDelete={onDelete}
         />
       ) : (
         <p>Loading...</p>
