@@ -24,11 +24,11 @@ export const likePost = async (req, res) => {
     if (!isLike){
       //AKA I AM LIKING IT SO I WILL UNLIKE
       post.likesPeople.push(myUserId);
-      post.likes -= 1
+      post.likes += 1
     }
     else{
       post.likesPeople = post.likesPeople.filter(id => id.toString() !== myUserId);
-      post.likes += 1
+      post.likes -= 1
 
     }
 
