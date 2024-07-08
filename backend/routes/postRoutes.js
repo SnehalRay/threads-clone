@@ -7,6 +7,7 @@ import { likePost } from '../controller/LikePost.js';
 import { replyPost } from '../controller/ReplyPost.js';
 import { getFeed } from '../controller/GetFeed.js'; 
 import { getUserPosts } from '../controller/GetUserPosts.js';
+import { checkLikePost } from '../controller/CheckLikePost.js';
 
 
 const postRouter = express.Router();
@@ -32,6 +33,9 @@ postRouter.post("/like/:id", authenticateToken, likePost);
 
 // REPLYING TO A POST
 postRouter.post("/reply/:id", authenticateToken, replyPost);
+
+//CHECKING IF USER LIKED
+postRouter.get("/like/:id/check", authenticateToken, checkLikePost);
 
 
 

@@ -6,10 +6,10 @@ import { FiSend } from "react-icons/fi";
 import { FcLike } from "react-icons/fc";
 import { Flex } from '@chakra-ui/react';
 
-export const Actions = ({ liked, setLiked }) => {
+export const Actions = ({ liked, setLiked, onClick }) => {
   const handleLikeClick = (e) => {
     e.preventDefault();
-    setLiked(!liked);
+    onClick(e); // Call the parent handleLikeClick function
   };
 
   const handleOtherClick = (e) => {

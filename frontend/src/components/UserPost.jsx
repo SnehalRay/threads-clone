@@ -1,12 +1,78 @@
 import { VStack, Flex, Box, Avatar, Text, Image, useColorModeValue, Menu, MenuButton, MenuList, Button, MenuItem, useToast } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CgMoreO } from "react-icons/cg";
 import { Actions } from './Actions';
 
 export const UserPost = ({ user, likes, replies, post, caption, time, postid, onDelete }) => {
   const [liked, setLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(likes);
   const toast = useToast();
+
+  useEffect(() => {
+    const checkIfLiked = async () => {
+      try {
+        const response = await fetch(`/api/posts/like/${postid}/check`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setLiked(data.isLike);
+          setLikeCount(data.likeCount);
+        } else {
+          const data = await response.json();
+          toast({
+            title: "Failed to check like status.",
+            description: data.message || "There was an error checking like status.",
+            status: "error",
+            duration: 9000,
+            isClosable: true,
+          });
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    checkIfLiked();
+  }, [postid, toast]);
+
+  const handleLikeClick = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(`/api/posts/like/${postid}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setLiked(!liked);
+        setLikeCount(data.post.likes);
+      } else {
+        const data = await response.json();
+        toast({
+          title: "Failed to like post.",
+          description: data.message || "There was an error liking the post.",
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: "Failed to like post.",
+        description: error.message || "There was an error liking the post.",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+  };
 
   const handleDelete = async (e) => {
     e.stopPropagation();
@@ -89,9 +155,9 @@ export const UserPost = ({ user, likes, replies, post, caption, time, postid, on
           <Image src={post} />
         </Link>
       </Box>
-      <Actions liked={liked} setLiked={setLiked} />
+      <Actions liked={liked} setLiked={setLiked} onClick={handleLikeClick} />
       <Flex gap={2} alignItems={"center"} justifyContent="flex-start">
-        <Text color={"gray.light"}> {likes} likes</Text>
+        <Text color={"gray.light"}> {likeCount} likes</Text>
         <Text color={"gray.light"}> {replies} replies</Text>
       </Flex>
     </VStack>
