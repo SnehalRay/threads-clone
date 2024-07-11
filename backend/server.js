@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import postRouter from "./routes/postRoutes.js";
 import {v2 as cloudinary } from "cloudinary"
 import aiChatBotRoutes from "./routes/aiChatBotRoutes.js";
+import dialogflowRoutes from "./routes/diagflowRoutes.js";
 
 
 dotenv.config();
@@ -41,6 +42,8 @@ app.use("/api/users",userRoutes);
 app.use("/api/posts", postRouter);
 
 app.use("/api/aiChatBot",aiChatBotRoutes);
+
+app.use("/api/dialogflow", dialogflowRoutes);
 
 console.log("postRouter setup on /api/posts"); // Debugging statement
 
