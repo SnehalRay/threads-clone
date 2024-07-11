@@ -44,7 +44,9 @@ function App() {
               mr={[3, 6]}
             />
           </Link>
+          <Link to={"/"}>
           <LogoutButton size={["sm", "lg"]} />
+          </Link>
         </Flex>
       )}
       {user && <CreatePost />}
