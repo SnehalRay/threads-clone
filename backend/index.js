@@ -53,3 +53,5 @@ app.get("/lol",async(req,res)=>{
 
 
 app.listen(PORT,()=>{console.log(`Server started with port ${PORT}...`)})
+
+export default app;
