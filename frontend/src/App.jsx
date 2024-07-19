@@ -13,6 +13,8 @@ import { CreatePost } from './components/CreatePost';
 import { FaHome } from "react-icons/fa";
 import { RiRobot2Fill } from "react-icons/ri";
 import Chatbot from './components/ChatBot';
+import { ChatPage } from './pages/ChatPage';
+import { FaRocketchat } from "react-icons/fa6";
 
 function App() {
   const user = useRecoilValue(userAtom);
@@ -26,6 +28,7 @@ function App() {
         <Route path="/:username/post/:pid" element={<PostPage />} />
         <Route path='/editProfile' element={user ? <EditProfilePage /> : <Navigate to="/authentication" />} />
         <Route path='/chatBot' element={<Chatbot/>}/>
+        <Route path='/chatPage' element={<ChatPage/>}/>
       </Routes>
 
       {user && (
@@ -35,6 +38,15 @@ function App() {
           right={["10px", "30px"]}
           alignItems="center"
         >
+          <Link to="/chatPage">
+          <IconButton
+              icon={<FaRocketchat style={{ fontSize: '1.5em' }} />}
+              size={["sm", "md"]}
+              variant="ghost"
+              aria-label="Chat"
+              mr={[3, 6]}
+            />
+          </Link>
           <Link to="/chatBot">
           <IconButton
               icon={<RiRobot2Fill style={{ fontSize: '1.5em' }} />}
