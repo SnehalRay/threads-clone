@@ -1,11 +1,49 @@
-import React from 'react';
-import { Box, Flex, Text, Input, Button, Skeleton, SkeletonCircle, useColorModeValue } from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
+import { Box, Flex, Text, Input, Button, Skeleton, SkeletonCircle, useColorModeValue, useToast } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
 import { GiConversation } from 'react-icons/gi';
 import { Conversation } from '../components/Conversation';
 import { MessageContainer } from '../components/MessageContainer';
 
 export const ChatPage = () => {
+    const [conversations, setConversations] = useState([]);
+    const [selectedConversation, setSelectedConversation] = useState(null);
+    const toast = useToast();
+
+    useEffect(() => {
+        const getConversations = async () => {
+            try {
+                const response = await fetch("api/messages/getConversation");
+                const data = await response.json();
+                if (data.error) {
+                    toast({
+                        title: "Error",
+                        description: data.error,
+                        status: "error",
+                        duration: 9000,
+                        isClosable: true,
+                    });
+                    return;
+                }
+                setConversations(data);
+                console.log(data);
+            } catch (error) {
+                toast({
+                    title: "Error",
+                    description: error.message,
+                    status: "error",
+                    duration: 9000,
+                    isClosable: true,
+                });
+            }
+        };
+        getConversations();
+    }, [toast]);
+
+    const handleConversationClick = (conversation) => {
+        setSelectedConversation(conversation);
+    };
+
     return (
         <Box
             position={"absolute"}
@@ -23,7 +61,7 @@ export const ChatPage = () => {
                 }}
                 mx={"auto"}
             >
-                <Flex flex={30} gap={4} flexDirection={"column"} maxW={{ sm: "300px", md: "full" }} mx={"auto"}>
+                <Flex flex={1} gap={4} flexDirection={"column"} maxW={{ sm: "300px", md: "full" }} mx={"auto"}>
                     <Text fontWeight={700} fontSize={"lg"} color={useColorModeValue("gray.600", "gray.400")}>
                         Your Conversations
                     </Text>
@@ -46,29 +84,36 @@ export const ChatPage = () => {
                         </Flex>
                     ))}
 
-                    <Conversation/>
-                    <Conversation/>
-                    <Conversation/>
-
-
-
-
-
+                    {conversations.map((conversation, index) => (
+                        <Conversation
+                            key={index}
+                            conversation={conversation}
+                            onClick={() => handleConversationClick(conversation)}
+                        />
+                    ))}
                 </Flex>
 
-                {/* <Flex
-                    flex={70}
+                <Flex
+                    flex={3}
                     borderRadius={"md"}
                     p={4}
                     flexDir={"column"}
                     alignItems={"center"}
                     justifyContent={"center"}
                     height={"500px"}
+                    width={"100%"}
+                    maxW={{ base: "100%", md: "100%" }}
+                    w={"full"}
                 >
-                    <GiConversation size={120} />
-                    <Text fontSize={24}>Select a conversation to start messaging</Text>
-                </Flex> */}
-                <MessageContainer/>
+                    {!selectedConversation ? (
+                        <>
+                            <GiConversation size={120} />
+                            <Text fontSize={24}>Select a conversation to start messaging</Text>
+                        </>
+                    ) : (
+                        <MessageContainer conversation={selectedConversation} />
+                    )}
+                </Flex>
             </Flex>
         </Box>
     );
