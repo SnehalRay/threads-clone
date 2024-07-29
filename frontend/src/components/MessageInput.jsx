@@ -12,7 +12,7 @@ import { useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { chatpageAtom, selectedConversationAtom } from "../../atoms/chatpageAtom";
 
-const MessageInput = ({ myUser, otherUser }) => {
+const MessageInput = ({ setMessages }) => {
     const [input, setInput] = useState("");
     const toast = useToast();
     const selectedConversation = useRecoilValue(selectedConversationAtom);
@@ -49,6 +49,8 @@ const MessageInput = ({ myUser, otherUser }) => {
                 });
                 return;
             }
+
+            setMessages((messages) => [...messages, data]);
 
             setConversations((prevConvs) => {
                 const updatedConversations = prevConvs.map((conversation) => {

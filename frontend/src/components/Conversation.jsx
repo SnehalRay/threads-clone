@@ -13,6 +13,7 @@ export const Conversation = ({ conversation, onClick, currentUserId }) => {
     console.log(selectedConversation);
 
     const { colorMode } = useColorMode();
+    const lastMessage = conversation.lastMessage;
 
     useEffect(() => {
         const getOtherParticipant = () => {
@@ -37,7 +38,7 @@ export const Conversation = ({ conversation, onClick, currentUserId }) => {
         return null; // or a loading spinner, placeholder, etc.
     }
 
-    const isLastMessageFromOtherUser = conversation.lastMessage.sender === user._id;
+    const isLastMessageFromOtherUser = lastMessage.sender === user._id;
 
     return (
         <Flex
@@ -81,7 +82,7 @@ export const Conversation = ({ conversation, onClick, currentUserId }) => {
                     {user.username}
                 </Text>
                 <Text fontSize={"xs"} display={"flex"} alignItems={"center"} gap={1} fontWeight={isLastMessageFromOtherUser ? 'bold' : 'normal'} whiteSpace="nowrap" overflow="hidden" textOverflow="ellipsis" maxWidth="200px">
-                    {conversation.lastMessage.text}
+                    {lastMessage.text}
                 </Text>
             </Stack>
         </Flex>

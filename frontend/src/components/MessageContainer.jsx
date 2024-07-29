@@ -45,6 +45,7 @@ export const MessageContainer = () => {
 
         const fetchMessages = async () => {
             setLoadingMessages(true);
+            setMessages([])
             try {
                 const response = await fetch(`/api/messages/getMessage/${otherParticipant._id}`);
                 const data = await response.json();
@@ -121,7 +122,7 @@ export const MessageContainer = () => {
                 ))}
             </Flex>
 
-            <MessageInput myUser={myUser} otherUser={otherParticipant} />
+            <MessageInput setMessages={setMessages} />
         </Flex>
     );
 };
