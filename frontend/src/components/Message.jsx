@@ -1,7 +1,12 @@
 import React from 'react';
 import { Flex, Text, Avatar } from '@chakra-ui/react';
+import { useRecoilValue } from 'recoil';
+import { selectedConversationAtom } from '../../atoms/chatpageAtom';
+import userAtom from '../../atoms/userAtom';
 
-export const Message = ({ ownMessage }) => {
+export const Message = ({ ownMessage, message, otherParticipant }) => {
+    const selectedConversation = useRecoilValue(selectedConversationAtom)
+    const user = useRecoilValue(userAtom);
     return (
         <>
             {ownMessage ? (
@@ -14,7 +19,7 @@ export const Message = ({ ownMessage }) => {
                 >
                     <Flex flexDir={"column"} gap={2}>
                         <Text bg={"purple.500"} color={"white"} p={2} borderRadius={"md"} alignSelf={"flex-end"}>
-                            Hello
+                            {message.text}
                         </Text>
                     </Flex>
                 </Flex>
@@ -26,10 +31,14 @@ export const Message = ({ ownMessage }) => {
                     borderRadius={"md"}
                     alignSelf={"flex-start"}
                 >
-                    <Avatar name="John Doe" size={"sm"} />
+                    <Avatar 
+                        name={otherParticipant.name} 
+                        src={otherParticipant.profilePic} 
+                        size={"sm"} 
+                    />
                     <Flex flexDir={"column"} gap={2}>
                         <Text bg={"gray.500"} color={"white"} p={2} borderRadius={"md"} alignSelf={"flex-start"}>
-                            Hello
+                            {message.text}
                         </Text>
                     </Flex>
                 </Flex>

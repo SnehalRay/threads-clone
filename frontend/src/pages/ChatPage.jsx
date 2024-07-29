@@ -4,17 +4,22 @@ import { SearchIcon } from '@chakra-ui/icons';
 import { GiConversation } from 'react-icons/gi';
 import { Conversation } from '../components/Conversation';
 import { MessageContainer } from '../components/MessageContainer';
+import { useRecoilValue, useSetRecoilState } from 'recoil'
+import userAtom from '../../atoms/userAtom'
 
 export const ChatPage = () => {
     const [conversations, setConversations] = useState([]);
     const [selectedConversation, setSelectedConversation] = useState(null);
     const toast = useToast();
+    const currentUser = useRecoilValue(userAtom);
+    console.log("USER:",currentUser)
 
     useEffect(() => {
         const getConversations = async () => {
             try {
                 const response = await fetch("api/messages/getConversation");
                 const data = await response.json();
+                console.log("API data:", data);
                 if (data.error) {
                     toast({
                         title: "Error",
@@ -26,7 +31,6 @@ export const ChatPage = () => {
                     return;
                 }
                 setConversations(data);
-                console.log(data);
             } catch (error) {
                 toast({
                     title: "Error",
@@ -43,6 +47,7 @@ export const ChatPage = () => {
     const handleConversationClick = (conversation) => {
         setSelectedConversation(conversation);
     };
+
 
     return (
         <Box
@@ -61,7 +66,7 @@ export const ChatPage = () => {
                 }}
                 mx={"auto"}
             >
-                <Flex flex={1} gap={4} flexDirection={"column"} maxW={{ sm: "300px", md: "full" }} mx={"auto"}>
+                <Flex flex={1} gap={4} flexDirection={"column"} maxW={{ sm: "300px", md: "full" }} mx={"auto"} p={2}>
                     <Text fontWeight={700} fontSize={"lg"} color={useColorModeValue("gray.600", "gray.400")}>
                         Your Conversations
                     </Text>
@@ -89,6 +94,7 @@ export const ChatPage = () => {
                             key={index}
                             conversation={conversation}
                             onClick={() => handleConversationClick(conversation)}
+                            currentUserId={currentUser._id}
                         />
                     ))}
                 </Flex>
@@ -96,7 +102,7 @@ export const ChatPage = () => {
                 <Flex
                     flex={3}
                     borderRadius={"md"}
-                    p={4}
+                    p={0} // Removed padding here
                     flexDir={"column"}
                     alignItems={"center"}
                     justifyContent={"center"}

@@ -1,14 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { Flex, Avatar, AvatarBadge, Stack, Text, useColorModeValue, WrapItem } from '@chakra-ui/react';
+import { Flex, Avatar, AvatarBadge, Stack, Text, useColorModeValue, WrapItem, useColorMode } from '@chakra-ui/react';
+import { useRecoilState } from 'recoil';
+import { selectedConversationAtom } from '../../atoms/chatpageAtom';
 
-export const Conversation = ({ conversation, onClick }) => {
+export const Conversation = ({ conversation, onClick, currentUserId }) => {
     const bgColor = useColorModeValue("gray.600", "gray.dark");
     const [user, setUser] = useState(null);
+    const [selectedConversation, setSelectedConversation] = useRecoilState(selectedConversationAtom);
+
+    console.log("JUST CHECKING");
+    console.log(currentUserId);
+    console.log(selectedConversation);
+
+    const { colorMode } = useColorMode();
 
     useEffect(() => {
+        const getOtherParticipant = () => {
+            return conversation.participants.find(participant => participant._id !== currentUserId);
+        };
+
         const getUser = async () => {
             try {
-                const response = await fetch(`/api/users/getUserFromID/${conversation.participants[0]._id}`);
+                const otherParticipant = getOtherParticipant();
+                const response = await fetch(`/api/users/getUserFromID/${otherParticipant._id}`);
                 const data = await response.json();
                 setUser(data);
             } catch (error) {
@@ -17,13 +31,13 @@ export const Conversation = ({ conversation, onClick }) => {
         };
 
         getUser();
-    }, [conversation.participants]);
+    }, [conversation.participants, currentUserId]);
 
     if (!user) {
         return null; // or a loading spinner, placeholder, etc.
     }
 
-    const isLastMessageFromOtherUser = conversation.lastMessage.sender == user._id
+    const isLastMessageFromOtherUser = conversation.lastMessage.sender === user._id;
 
     return (
         <Flex
@@ -36,7 +50,16 @@ export const Conversation = ({ conversation, onClick }) => {
                 color: "white",
             }}
             borderRadius={"md"}
-            onClick={onClick}
+            onClick={() => {
+                setSelectedConversation({
+                    _id: conversation._id,
+                    userId: user._id,
+                    username: user.username,
+                    profilePic: user.profilePic,
+                });
+                onClick();
+            }}
+            bg={selectedConversation?._id === conversation._id ? (colorMode === "light" ? "gray.600" : "gray.dark") : "transparent"}
         >
             <WrapItem>
                 <Avatar
