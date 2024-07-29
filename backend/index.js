@@ -7,6 +7,8 @@ import postRouter from "./routes/postRoutes.js";
 import {v2 as cloudinary } from "cloudinary"
 import aiChatBotRoutes from "./routes/aiChatBotRoutes.js";
 import dialogflowRoutes from "./routes/diagflowRoutes.js";
+import messageRouter from "./routes/messagesRoutes.js";
+
 
 
 dotenv.config();
@@ -44,6 +46,8 @@ app.use("/api/posts", postRouter);
 app.use("/api/aiChatBot",aiChatBotRoutes);
 
 app.use("/api/dialogflow", dialogflowRoutes);
+
+app.use("/api/messages",messageRouter)
 
 console.log("postRouter setup on /api/posts"); // Debugging statement
 
