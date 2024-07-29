@@ -121,7 +121,7 @@ export const MessageContainer = () => {
                 ))}
             </Flex>
 
-            <MessageInput />
+            <MessageInput myUser={myUser} otherUser={otherParticipant} />
         </Flex>
     );
 };
