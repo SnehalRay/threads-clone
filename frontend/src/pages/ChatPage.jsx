@@ -7,6 +7,7 @@ import { MessageContainer } from '../components/MessageContainer';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import userAtom from '../../atoms/userAtom';
 import { ChatUserList } from '../components/ChatUserList'; // New component for chat user list
+import { useSocket } from '../../context/SocketContext';
 
 export const ChatPage = () => {
     const [conversations, setConversations] = useState([]);
@@ -17,6 +18,7 @@ export const ChatPage = () => {
     const [message, setMessage] = useState('');
     const toast = useToast();
     const currentUser = useRecoilValue(userAtom);
+    const { socket, onlineUsers } = useSocket();
 
     useEffect(() => {
         const getConversations = async () => {
@@ -152,6 +154,7 @@ export const ChatPage = () => {
                                 conversation={conversation}
                                 onClick={() => handleConversationClick(conversation)}
                                 currentUserId={currentUser._id}
+                                isOnline={conversation.participants.some(participant => onlineUsers.includes(participant._id))}
                             />
                         ))
                     )}

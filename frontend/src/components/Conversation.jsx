@@ -3,7 +3,7 @@ import { Flex, Avatar, AvatarBadge, Stack, Text, useColorModeValue, WrapItem, us
 import { useRecoilState } from 'recoil';
 import { selectedConversationAtom } from '../../atoms/chatpageAtom';
 
-export const Conversation = ({ conversation, onClick, currentUserId }) => {
+export const Conversation = ({ conversation, onClick, currentUserId, isOnline }) => {
     const bgColor = useColorModeValue("gray.600", "gray.dark");
     const [user, setUser] = useState(null);
     const [selectedConversation, setSelectedConversation] = useRecoilState(selectedConversationAtom);
@@ -73,7 +73,8 @@ export const Conversation = ({ conversation, onClick, currentUserId }) => {
                     src={user.profilePic || 'default-avatar.png'}
                     bg={"purple.500"}
                 >
-                    <AvatarBadge boxSize='1em' bg='green.500' />
+                    <AvatarBadge boxSize='1em' bg={isOnline ? 'green.500' : 'red.500'} />
+                    {/* <AvatarBadge boxSize='1em' bg='green.500' /> */}
                 </Avatar>
             </WrapItem>
 
