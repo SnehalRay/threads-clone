@@ -5,6 +5,7 @@ import MessageInput from './MessageInput';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { selectedConversationAtom } from '../../atoms/chatpageAtom';
 import userAtom from '../../atoms/userAtom';
+import { useSocket } from '../../context/SocketContext';
 
 export const MessageContainer = () => {
     const toast = useToast();
@@ -13,6 +14,19 @@ export const MessageContainer = () => {
     const [messages, setMessages] = useState([]);
     const [otherParticipant, setOtherParticipant] = useState(null);
     const myUser = useRecoilValue(userAtom);
+    const {socket} = useSocket();
+
+
+    //LOOKING FOR SOCKET IO EVENTS
+
+    useEffect(()=>{
+        socket?.on("newMessage",(message)=>{
+            console.log("NEW MESSAGE",message);
+            setMessages(prev=>[...prev,message]);
+        })
+        return () => socket.off("newMessage");
+
+    },[socket])
 
     console.log("SELECTED CONVERSATION:", selectedConversation);
 
