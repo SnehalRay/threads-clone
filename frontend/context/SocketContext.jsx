@@ -24,7 +24,7 @@ export const SocketContextProvider = ({children}) => {
 
         socket.on("getOnlineUsers",(users)=>{
             setOnlineUsers(users);
-        })
+        }) //I AM LISTENING TO THE EVENTS
 
         return () => socket && socket.close();
     },[user?._id]);
