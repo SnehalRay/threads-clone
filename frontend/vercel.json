@@ -1,0 +1,30 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "src/**/*.jsx",
+        "use": "@vercel/static-build",
+        "config": {
+          "distDir": "dist"
+        }
+      },
+      {
+        "src": "public/**/*",
+        "use": "@vercel/static-build"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "/index.html"
+      }
+    ],
+    "static-build": {
+      "buildCommand": "npm run build",
+      "outputDirectory": "dist"
+    },
+    "env": {
+      "VITE_API_URL": "https://threads-clone-api-one.vercel.app"
+    }
+  }
+  
