@@ -5,7 +5,7 @@ import cors from 'cors';  // Import cors
 
 const app = express();
 app.use(cors({
-    origin: ["http://localhost:3000"],
+    origin: ["http://localhost:3000","https://threads-clone-dggs-fm989pq6k-snehal-rays-projects.vercel.app/"],
     methods: ["GET", "POST"],
     credentials: true
 }));  // Use cors middleware
@@ -13,7 +13,7 @@ app.use(cors({
 const server = http.createServer(app); // CREATING HTTP SERVER
 const io = new Server(server, {
     cors: {
-        origin: ["http://localhost:3000"],
+        origin: ["http://localhost:3000","https://threads-clone-dggs-fm989pq6k-snehal-rays-projects.vercel.app/"],
         methods: ["GET", "POST"],
         credentials: true
     }
