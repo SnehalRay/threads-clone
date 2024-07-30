@@ -8,13 +8,13 @@ import {v2 as cloudinary } from "cloudinary"
 import aiChatBotRoutes from "./routes/aiChatBotRoutes.js";
 import dialogflowRoutes from "./routes/diagflowRoutes.js";
 import messageRouter from "./routes/messagesRoutes.js";
-
+import {app, server} from "./socket/socket.js"
 
 
 dotenv.config();
 await connectDB();
 
-const app = express();
+// const app = express();
 const PORT = process.env.PORT || 8000;
 
 cloudinary.config({
@@ -23,11 +23,11 @@ cloudinary.config({
     api_secret:"ypT4kPmQNT7RwBsKcPVtg5prTDY"
 });
 
-console.log('Cloudinary Config:', {
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET ? 'Exists' : 'Not Found'
-});
+// console.log('Cloudinary Config:', {
+//     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+//     api_key: process.env.CLOUDINARY_API_KEY,
+//     api_secret: process.env.CLOUDINARY_API_SECRET ? 'Exists' : 'Not Found'
+// });
 //MIDDLEWARE
 
 app.use(express.json({ limit: '50mb' }));
@@ -49,13 +49,13 @@ app.use("/api/dialogflow", dialogflowRoutes);
 
 app.use("/api/messages",messageRouter)
 
-console.log("postRouter setup on /api/posts"); // Debugging statement
+// console.log("postRouter setup on /api/posts"); // Debugging statement
 
 app.get("/lol",async(req,res)=>{
     res.send("LOL")
 });
 
 
-app.listen(PORT,()=>{console.log(`Server started with port ${PORT}...`)})
+server.listen(PORT,()=>{console.log(`Server started with port ${PORT}...`)})
 
 export default app;
