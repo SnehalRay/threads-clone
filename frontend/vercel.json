@@ -2,29 +2,18 @@
     "version": 2,
     "builds": [
       {
-        "src": "src/**/*.jsx",
+        "src": "frontend/package.json",
         "use": "@vercel/static-build",
         "config": {
-          "distDir": "dist"
+          "distDir": "frontend/dist"
         }
-      },
-      {
-        "src": "public/**/*",
-        "use": "@vercel/static-build"
       }
     ],
     "routes": [
       {
         "src": "/(.*)",
-        "dest": "/index.html"
+        "dest": "/frontend/dist/$1"
       }
-    ],
-    "static-build": {
-      "buildCommand": "npm run build",
-      "outputDirectory": "dist"
-    },
-    "env": {
-      "VITE_API_URL": "https://threads-clone-api-one.vercel.app"
-    }
+    ]
   }
   
